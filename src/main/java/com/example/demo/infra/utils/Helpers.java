@@ -8,9 +8,10 @@ import java.util.regex.Pattern;
 public class Helpers {
 
     public boolean patternMatches(String string, String regexPattern) {
-        return Pattern.compile(regexPattern)
+        boolean result = Pattern.compile(regexPattern)
                 .matcher(string)
                 .matches();
+        return result;
     }
 
 }

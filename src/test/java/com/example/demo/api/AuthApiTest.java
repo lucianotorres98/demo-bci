@@ -17,6 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.http.ResponseEntity;
 
+import java.net.URI;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -41,7 +43,7 @@ public class AuthApiTest {
 
         ResponseEntity<LoginResponseDto> response = authApi.signUp(registerUserDto);
 
-        assertEquals(ResponseEntity.ok(loginResponseDto), response);
+        assertEquals(ResponseEntity.created(URI.create("")).body(loginResponseDto), response);
         verify(authService, times(1)).signUp(registerUserDto);
     }
 

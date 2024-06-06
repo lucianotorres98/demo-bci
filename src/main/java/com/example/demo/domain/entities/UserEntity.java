@@ -36,7 +36,7 @@ public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "users_generator")
     @SequenceGenerator(name = "users_generator", sequenceName = "users_seq", allocationSize = 1)
-    private Long id;
+    private Integer id;
 
     @Column(name = "uuid", unique = true, nullable = false)
     private String uuid;

@@ -67,28 +67,32 @@ public class AuthServiceImpl implements AuthService {
         user.setToken(jwt.generateToken(user));
         Optional.ofNullable(input.getPhones()).ifPresent(phones -> user.setPhones(PhoneEntity.fromDtoList(phones, user)));
 
+        UserEntity savedUser;
         try {
-            userRepository.save(user);
+            savedUser = userRepository.save(user);
             logger.info("User created with email: {}", input.getEmail());
         } catch (DataAccessException ex) {
             logger.error("Error occurred while saving user to the database: {}", ex.getMessage());
             throw new DatabaseException("Error occurred while saving user to the database", ex);
         }
 
-        logger.info("User created with email: {}", input.getEmail());
-        return LoginResponseDto.fromEntity(user);
+        logger.info("User saved with email: {}", input.getEmail());
+        return LoginResponseDto.fromEntity(savedUser);
     }
 
     @Override
     public LoginResponseDto login(LoginDto input) {
-        UserEntity user = userRepository.findByEmail(input.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        logger.info("Logging in user with email: {}", input.getEmail());
+
+        UserEntity user = userRepository.findByEmail(input.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword()));
 
         return LoginResponseDto.fromEntity(user);
     }
 
-    public boolean validateEmailAndPassword(String email, String password) {
+    private void validateEmailAndPassword(String email, String password) {
         if (!helpers.patternMatches(email, JWTConstant.EMAIL_REGEX)) {
             logger.error("Invalid email: {}", email);
             throw new InvalidEmailException("Invalid email ");
@@ -97,6 +101,5 @@ public class AuthServiceImpl implements AuthService {
             logger.error("Invalid password: {}", password);
             throw new InvalidPasswordException("Invalid password");
         }
-        return true;
     }
 }
