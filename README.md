@@ -41,15 +41,15 @@ This command runs all the tests in the project and generates a test report in th
 ## Diagramas
 
 ### Diagrama de componentes
-![UML](Diagrama de componentes.jpg)
+![UML](Diagrama%20de%20componentes.jpg)
 
 ### Diagrama de secuencia
 
 #### SignUp
-![SignUp](Diagrama de secuencia SIGNUP.jpg)
+![SignUp](Diagrama%20de%20secuencia%20SIGNUP.jpg)
 
 #### Login
-![Login](Diagrama de secuencia LOGIN.jpg)
+![Login](Diagrama%20de%20secuencia%20LOGIN.jpg)
 
 ## Author
 
